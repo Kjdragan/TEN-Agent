@@ -11,8 +11,8 @@
             "addon": "agora_rtc",
             "extension_group": "default",
             "property": {
-              "app_id": "${env:AGORA_APP_ID}",
-              "token": "<agora_token>",
+              "app_id": "e8daa7d71de64f2ca90011cb400b4496",
+              "token": "",
               "channel": "ten_agent_test",
               "stream_id": 1234,
               "remote_stream_id": 123,
@@ -30,43 +30,46 @@
           {
             "type": "extension",
             "name": "stt",
-            "addon": "deepgram_asr_python",
+            "addon": "transcribe_asr_python",
             "extension_group": "stt",
             "property": {
-              "api_key": "${env:DEEPGRAM_API_KEY}",
-              "language": "en-US",
-              "model": "nova-2",
-              "sample_rate": 16000
+              "access_key": "${env:AWS_ACCESS_KEY_ID}",
+              "lang_code": "en-US",
+              "region": "us-east-1",
+              "sample_rate": "16000",
+              "secret_key": "${env:AWS_SECRET_ACCESS_KEY}"
             }
           },
           {
             "type": "extension",
             "name": "llm",
-            "addon": "openai_chatgpt_python",
+            "addon": "gemini_llm_python",
             "extension_group": "chatgpt",
             "property": {
-              "api_key": "${env:OPENAI_API_KEY}",
-              "base_url": "",
-              "frequency_penalty": 0.9,
+              "api_key": "AIzaSyAKS2CY7rDg7THq-YOQJVgeHPZGnHaCOVo",
               "greeting": "TEN Agent connected. How can I help you today?",
               "max_memory_length": 10,
-              "max_tokens": 512,
-              "model": "${env:OPENAI_MODEL}",
+              "max_output_tokens": 506,
+              "model": "gemini-2.0-flash",
               "prompt": "",
-              "proxy_url": "${env:OPENAI_PROXY_URL}"
+              "temperature": 0.9,
+              "top_k": 40,
+              "top_p": 0.95
             }
           },
           {
             "type": "extension",
             "name": "tts",
-            "addon": "fish_audio_tts",
+            "addon": "minimax_tts_python",
             "extension_group": "tts",
             "property": {
-              "api_key": "${env:FISH_AUDIO_TTS_KEY}",
-              "model_id": "d8639b5cc95548f5afbcfe22d3ba5ce5",
-              "optimize_streaming_latency": true,
-              "request_timeout_seconds": 30,
-              "base_url": "https://api.fish.audio"
+              "api_key": "eyJHcm91cE5hbWUiOiJLZXZpbiBEcmFnYW4iLCJVc2VyTmFtZSI6IktldmluIERyYWdhbiIsIkFjY291bnQiOiIiLCJTdWJqZWN0SUQiOiIxODc5MTYzNDc3NDgyODAzNjA1IiwiUGhvbmUiOiIiLCJHcm91cElEIjoiMTg3OTE2MzQ3NzQ3NDQxNDk5NyIsIlBhZ2VOYW1lIjoiIiwiTWFpbCI6ImtldmluamRyYWdhbkBnbWFpbC5jb20iLCJDcmVhdGVUaW1lIjoiMjAyNS0wMS0yMyAwMjoyMDoxMiIsIlRva2VuVHlwZSI6MSwiaXNzIjoibWluaW1heCJ9.lKSj24SrlPFKKcX0I8MHiSBYb5TQL8uHM7vsaGj2U17C-RostwbiOqjvVCA6TrFBMW3qiqeUO4b2iTTLu7HNxTzWai4Z1vPxadXxJl9gbL2gSZCiSvWWrWk1vr70XSjAxGIPfFu2-TeLNdR9MLSLO1oGJbtmTfT5BXSB_P1TTr3thWZiQN6O357WOT0M4bQ-PjQ37XjhwUBoz7NWXFFvrdVfyFLk_mvAtSFD5AefECA7muA68RKcGh8H8xfxrZyt7JnMV19SdOiWPms1S4wcpdQnGMCPgnO-vrmABccLT2DxsFptt4SjpFqWjZg-jPfbPa5GLFk51txmZvR_h8dMYw",
+              "group_id": "1879163477474414997",
+              "model": "speech-01-turbo",
+              "request_timeout_seconds": 10,
+              "sample_rate": 32000,
+              "url": "https://api.minimax.chat/v1/t2a_v2",
+              "voice_id": "English_captivating_female1"
             }
           },
           {
@@ -82,15 +85,6 @@
             "addon": "message_collector",
             "extension_group": "transcriber",
             "property": {}
-          },
-          {
-            "type": "extension",
-            "name": "weatherapi_tool_python",
-            "addon": "weatherapi_tool_python",
-            "extension_group": "default",
-            "property": {
-              "api_key": "${env:WEATHERAPI_API_KEY|}"
-            }
           }
         ],
         "connections": [
@@ -159,14 +153,6 @@
                     "extension": "tts"
                   }
                 ]
-              },
-              {
-                "name": "tool_call",
-                "dest": [
-                  {
-                    "extension": "weatherapi_tool_python"
-                  }
-                ]
               }
             ],
             "data": [
@@ -242,19 +228,6 @@
             "data": [
               {
                 "name": "text_data",
-                "dest": [
-                  {
-                    "extension": "llm"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "extension": "weatherapi_tool_python",
-            "cmd": [
-              {
-                "name": "tool_register",
                 "dest": [
                   {
                     "extension": "llm"
@@ -311,14 +284,16 @@
           {
             "type": "extension",
             "name": "tts",
-            "addon": "fish_audio_tts",
+            "addon": "minimax_tts_python",
             "extension_group": "tts",
             "property": {
-              "api_key": "${env:FISH_AUDIO_TTS_KEY}",
-              "model_id": "d8639b5cc95548f5afbcfe22d3ba5ce5",
-              "optimize_streaming_latency": true,
-              "request_timeout_seconds": 30,
-              "base_url": "https://api.fish.audio"
+              "api_key": "${env:MINIMAX_TTS_API_KEY}",
+              "group_id": "${env:MINIMAX_TTS_GROUP_ID}",
+              "model": "speech-01-turbo",
+              "request_timeout_seconds": 10,
+              "sample_rate": 32000,
+              "url": "https://api.minimax.chat/v1/t2a_v2",
+              "voice_id": "male-qn-qingse"
             }
           },
           {
@@ -334,15 +309,6 @@
             "addon": "message_collector",
             "extension_group": "transcriber",
             "property": {}
-          },
-          {
-            "type": "extension",
-            "name": "weatherapi_tool_python",
-            "addon": "weatherapi_tool_python",
-            "extension_group": "default",
-            "property": {
-              "api_key": "${env:WEATHERAPI_API_KEY|}"
-            }
           }
         ],
         "connections": [
@@ -396,14 +362,6 @@
                 "dest": [
                   {
                     "extension": "tts"
-                  }
-                ]
-              },
-              {
-                "name": "tool_call",
-                "dest": [
-                  {
-                    "extension": "weatherapi_tool_python"
                   }
                 ]
               }
@@ -481,19 +439,6 @@
             "data": [
               {
                 "name": "text_data",
-                "dest": [
-                  {
-                    "extension": "llm"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "extension": "weatherapi_tool_python",
-            "cmd": [
-              {
-                "name": "tool_register",
                 "dest": [
                   {
                     "extension": "llm"
